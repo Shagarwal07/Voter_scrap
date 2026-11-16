@@ -1,0 +1,1171 @@
+[
+  {
+    "ward_number": 1,
+    "candidate_name": "मंजू",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "F"
+  },
+  {
+    "ward_number": 1,
+    "candidate_name": "मनिता देवी",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "F"
+  },
+  {
+    "ward_number": 2,
+    "candidate_name": "किशोर कुमार गोलेच्छा",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 2,
+    "candidate_name": "गजेन्द्र",
+    "party_name": "राष्ट्रीय लोकतांत्रिक पार्टी",
+    "symbol_name": "बोतल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 2,
+    "candidate_name": "एम. संजय जैन",
+    "party_name": "निर्दलीय",
+    "symbol_name": "बाँसुरी",
+    "gender": "M"
+  },
+  {
+    "ward_number": 2,
+    "candidate_name": "नेमीचन्द",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सेब",
+    "gender": "M"
+  },
+  {
+    "ward_number": 3,
+    "candidate_name": "इन्द्रा बानो",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "F"
+  },
+  {
+    "ward_number": 3,
+    "candidate_name": "चांदनी जिंदल",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "F"
+  },
+  {
+    "ward_number": 3,
+    "candidate_name": "भूरी देवी",
+    "party_name": "राष्ट्रीय लोकतांत्रिक पार्टी",
+    "symbol_name": "बोतल",
+    "gender": "F"
+  },
+  {
+    "ward_number": 3,
+    "candidate_name": "हनिफा बानू",
+    "party_name": "निर्दलीय",
+    "symbol_name": "अलमारी",
+    "gender": "F"
+  },
+  {
+    "ward_number": 4,
+    "candidate_name": "चान्दनी",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "F"
+  },
+  {
+    "ward_number": 4,
+    "candidate_name": "नेनू देवी",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "F"
+  },
+  {
+    "ward_number": 5,
+    "candidate_name": "अशोक कुमार",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 5,
+    "candidate_name": "नवरतन",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 5,
+    "candidate_name": "गीता",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सेब",
+    "gender": "F"
+  },
+  {
+    "ward_number": 6,
+    "candidate_name": "कुम्पाराम",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 6,
+    "candidate_name": "सुरेश कुमार",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 6,
+    "candidate_name": "कपिल",
+    "party_name": "निर्दलीय",
+    "symbol_name": "अलमारी",
+    "gender": "M"
+  },
+  {
+    "ward_number": 6,
+    "candidate_name": "कमलेश",
+    "party_name": "निर्दलीय",
+    "symbol_name": "बाँसुरी",
+    "gender": "M"
+  },
+  {
+    "ward_number": 6,
+    "candidate_name": "मुकेश",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सेब",
+    "gender": "M"
+  },
+  {
+    "ward_number": 7,
+    "candidate_name": "ओमा",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "F"
+  },
+  {
+    "ward_number": 7,
+    "candidate_name": "दीपा",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "F"
+  },
+  {
+    "ward_number": 8,
+    "candidate_name": "गेना राम",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 8,
+    "candidate_name": "योगेश कुमार",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 8,
+    "candidate_name": "लालाराम",
+    "party_name": "निर्दलीय",
+    "symbol_name": "बाल्टी",
+    "gender": "M"
+  },
+  {
+    "ward_number": 9,
+    "candidate_name": "मंजू कंवर",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "F"
+  },
+  {
+    "ward_number": 9,
+    "candidate_name": "रेखा देवी",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "F"
+  },
+  {
+    "ward_number": 10,
+    "candidate_name": "रमेश पुरी",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 10,
+    "candidate_name": "रोहित कुमार",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सेब",
+    "gender": "M"
+  },
+  {
+    "ward_number": 11,
+    "candidate_name": "सलोनी",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "F"
+  },
+  {
+    "ward_number": 11,
+    "candidate_name": "हेमलता",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "F"
+  },
+  {
+    "ward_number": 12,
+    "candidate_name": "पुष्पा देवी",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "F"
+  },
+  {
+    "ward_number": 12,
+    "candidate_name": "प्रभा सिंघवी",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "F"
+  },
+  {
+    "ward_number": 12,
+    "candidate_name": "कावेरी शर्मा",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सेब",
+    "gender": "F"
+  },
+  {
+    "ward_number": 13,
+    "candidate_name": "पुष्पा",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "F"
+  },
+  {
+    "ward_number": 13,
+    "candidate_name": "ममता देवी",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "F"
+  },
+  {
+    "ward_number": 14,
+    "candidate_name": "अनिल बांठिया",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 14,
+    "candidate_name": "श्रवण कुमार",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 14,
+    "candidate_name": "अमित",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सेब",
+    "gender": "M"
+  },
+  {
+    "ward_number": 15,
+    "candidate_name": "कांतिलाल",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 15,
+    "candidate_name": "रविन्द्र कुमार जाटोल",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 16,
+    "candidate_name": "ममता देवी",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "F"
+  },
+  {
+    "ward_number": 16,
+    "candidate_name": "चन्द्रा देवी",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सेब",
+    "gender": "F"
+  },
+  {
+    "ward_number": 16,
+    "candidate_name": "सरला देवी",
+    "party_name": "निर्दलीय",
+    "symbol_name": "अलमारी",
+    "gender": "F"
+  },
+  {
+    "ward_number": 17,
+    "candidate_name": "रिषभ",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 17,
+    "candidate_name": "रोहित कुमार",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 18,
+    "candidate_name": "राजेन्द्र कुमार",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 18,
+    "candidate_name": "सतीश कुमार",
+    "party_name": "आम आदमी पार्टी",
+    "symbol_name": "झाडू",
+    "gender": "M"
+  },
+  {
+    "ward_number": 18,
+    "candidate_name": "सुरेन्द्र",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 19,
+    "candidate_name": "निखिल अवस्थी",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 19,
+    "candidate_name": "मोहम्मद अयूब",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 19,
+    "candidate_name": "अब्दुल वहीद",
+    "party_name": "निर्दलीय",
+    "symbol_name": "अलमारी",
+    "gender": "M"
+  },
+  {
+    "ward_number": 19,
+    "candidate_name": "राजेन्द्र",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सेब",
+    "gender": "M"
+  },
+  {
+    "ward_number": 20,
+    "candidate_name": "जसराज",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 20,
+    "candidate_name": "संतोष कुमार",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 20,
+    "candidate_name": "हरिश कुमार",
+    "party_name": "राष्ट्रीय लोकतांत्रिक पार्टी",
+    "symbol_name": "बोतल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 20,
+    "candidate_name": "यशवन्त",
+    "party_name": "निर्दलीय",
+    "symbol_name": "बाँसुरी",
+    "gender": "M"
+  },
+  {
+    "ward_number": 20,
+    "candidate_name": "शिव कुमार",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सेब",
+    "gender": "M"
+  },
+  {
+    "ward_number": 21,
+    "candidate_name": "जबरसिंह",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 21,
+    "candidate_name": "राजीव पंवार",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 21,
+    "candidate_name": "मानवेन्द्र",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सेब",
+    "gender": "M"
+  },
+  {
+    "ward_number": 22,
+    "candidate_name": "अंकिता",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "F"
+  },
+  {
+    "ward_number": 22,
+    "candidate_name": "मंजू",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "F"
+  },
+  {
+    "ward_number": 23,
+    "candidate_name": "कान्ता देवी",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "F"
+  },
+  {
+    "ward_number": 23,
+    "candidate_name": "विमला",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "F"
+  },
+  {
+    "ward_number": 23,
+    "candidate_name": "सुमित्रा देवी",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सेब",
+    "gender": "F"
+  },
+  {
+    "ward_number": 24,
+    "candidate_name": "गुडिया देवी",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "F"
+  },
+  {
+    "ward_number": 24,
+    "candidate_name": "ममता",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "F"
+  },
+  {
+    "ward_number": 25,
+    "candidate_name": "जानकी",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "F"
+  },
+  {
+    "ward_number": 25,
+    "candidate_name": "संगीता",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "F"
+  },
+  {
+    "ward_number": 26,
+    "candidate_name": "कन्हैयालाल",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 26,
+    "candidate_name": "श्रवण कुमार",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 27,
+    "candidate_name": "लक्ष्मण पंवार",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 27,
+    "candidate_name": "सरूपाराम",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 27,
+    "candidate_name": "ईश्वरलाल",
+    "party_name": "निर्दलीय",
+    "symbol_name": "अलमारी",
+    "gender": "M"
+  },
+  {
+    "ward_number": 27,
+    "candidate_name": "किशोर कुमार",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सेब",
+    "gender": "M"
+  },
+  {
+    "ward_number": 27,
+    "candidate_name": "पवन कुमार",
+    "party_name": "निर्दलीय",
+    "symbol_name": "बाँसुरी",
+    "gender": "M"
+  },
+  {
+    "ward_number": 28,
+    "candidate_name": "नाहरसिंह",
+    "party_name": "आम आदमी पार्टी",
+    "symbol_name": "झाडू",
+    "gender": "M"
+  },
+  {
+    "ward_number": 28,
+    "candidate_name": "महेन्द्र",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 28,
+    "candidate_name": "आशाराम",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सिलाई की मशीन",
+    "gender": "M"
+  },
+  {
+    "ward_number": 28,
+    "candidate_name": "भावेश पंवार",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सेब",
+    "gender": "M"
+  },
+  {
+    "ward_number": 29,
+    "candidate_name": "नैनाराम",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 29,
+    "candidate_name": "सुरेश कुमार",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 29,
+    "candidate_name": "श्रवण कुमार",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सेब",
+    "gender": "M"
+  },
+  {
+    "ward_number": 30,
+    "candidate_name": "जगदीश",
+    "party_name": "राष्ट्रीय लोकतांत्रिक पार्टी",
+    "symbol_name": "बोतल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 30,
+    "candidate_name": "जैसाराम",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 30,
+    "candidate_name": "मुकेश",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 30,
+    "candidate_name": "पांचाराम",
+    "party_name": "निर्दलीय",
+    "symbol_name": "हारमोनियम",
+    "gender": "M"
+  },
+  {
+    "ward_number": 30,
+    "candidate_name": "सरूपाराम",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सेब",
+    "gender": "M"
+  },
+  {
+    "ward_number": 31,
+    "candidate_name": "गणपत लाल",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 31,
+    "candidate_name": "भरत कुमार",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 31,
+    "candidate_name": "सायदा",
+    "party_name": "राष्ट्रीय लोकतांत्रिक पार्टी",
+    "symbol_name": "बोतल",
+    "gender": "F"
+  },
+  {
+    "ward_number": 31,
+    "candidate_name": "गणपत नामा",
+    "party_name": "निर्दलीय",
+    "symbol_name": "अलमारी",
+    "gender": "M"
+  },
+  {
+    "ward_number": 32,
+    "candidate_name": "संगीता",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "F"
+  },
+  {
+    "ward_number": 32,
+    "candidate_name": "रमकू",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सेब",
+    "gender": "M"
+  },
+  {
+    "ward_number": 32,
+    "candidate_name": "सुमित्रा",
+    "party_name": "निर्दलीय",
+    "symbol_name": "टेलीफोन",
+    "gender": "F"
+  },
+  {
+    "ward_number": 33,
+    "candidate_name": "मांगीलाल",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 33,
+    "candidate_name": "सम्पतराज",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 34,
+    "candidate_name": "जैसाराम",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 34,
+    "candidate_name": "हंसराज",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 34,
+    "candidate_name": "प्रकाश",
+    "party_name": "निर्दलीय",
+    "symbol_name": "अलमारी",
+    "gender": "M"
+  },
+  {
+    "ward_number": 35,
+    "candidate_name": "नरेश कुमार",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 35,
+    "candidate_name": "सुरेश कुमार",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 35,
+    "candidate_name": "नरसिंगराम प्रजापत",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सिलाई की मशीन",
+    "gender": "M"
+  },
+  {
+    "ward_number": 36,
+    "candidate_name": "ओमप्रकाश",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 36,
+    "candidate_name": "कान्तिलाल",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 36,
+    "candidate_name": "अरिहन्त",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सेब",
+    "gender": "M"
+  },
+  {
+    "ward_number": 37,
+    "candidate_name": "मांगीलाल",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 37,
+    "candidate_name": "शान्तिलाल",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 37,
+    "candidate_name": "कमलेश कुमार ढेलडिया",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सेब",
+    "gender": "M"
+  },
+  {
+    "ward_number": 38,
+    "candidate_name": "अशोक कुमार",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 38,
+    "candidate_name": "रतनलाल खत्री",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 38,
+    "candidate_name": "रितिक पंचारिया",
+    "party_name": "राष्ट्रीय लोकतांत्रिक पार्टी",
+    "symbol_name": "बोतल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 39,
+    "candidate_name": "मोहम्मद हुसैन",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 39,
+    "candidate_name": "रोशन अली",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 39,
+    "candidate_name": "नासीर",
+    "party_name": "निर्दलीय",
+    "symbol_name": "अलमारी",
+    "gender": "M"
+  },
+  {
+    "ward_number": 40,
+    "candidate_name": "रूकसानू",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 40,
+    "candidate_name": "सूफिया बानू",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "F"
+  },
+  {
+    "ward_number": 40,
+    "candidate_name": "शहनाज बानो",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सेब",
+    "gender": "F"
+  },
+  {
+    "ward_number": 41,
+    "candidate_name": "नरपत कुमार",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 41,
+    "candidate_name": "पुरूषोत्तम जोगसन",
+    "party_name": "राष्ट्रीय लोकतांत्रिक पार्टी",
+    "symbol_name": "बोतल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 41,
+    "candidate_name": "हीरालाल",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 42,
+    "candidate_name": "भंवरलाल भाटी",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 42,
+    "candidate_name": "महेन्द्र",
+    "party_name": "राष्ट्रीय लोकतांत्रिक पार्टी",
+    "symbol_name": "बोतल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 42,
+    "candidate_name": "सुरेश",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 42,
+    "candidate_name": "हंसराज",
+    "party_name": "निर्दलीय",
+    "symbol_name": "अलमारी",
+    "gender": "M"
+  },
+  {
+    "ward_number": 42,
+    "candidate_name": "हनुमानाराम उर्फ हडमानाराम",
+    "party_name": "निर्दलीय",
+    "symbol_name": "गैस का चूल्हा",
+    "gender": "M"
+  },
+  {
+    "ward_number": 43,
+    "candidate_name": "आशा देवी",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "F"
+  },
+  {
+    "ward_number": 43,
+    "candidate_name": "संतोष",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 44,
+    "candidate_name": "धनराज",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 44,
+    "candidate_name": "बजरंग लाल",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 44,
+    "candidate_name": "गोविन्द राम",
+    "party_name": "निर्दलीय",
+    "symbol_name": "अलमारी",
+    "gender": "M"
+  },
+  {
+    "ward_number": 44,
+    "candidate_name": "राजेन्द्र कुमार",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सेब",
+    "gender": "M"
+  },
+  {
+    "ward_number": 45,
+    "candidate_name": "धनवन्ती देवी",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "F"
+  },
+  {
+    "ward_number": 45,
+    "candidate_name": "हंजा देवी",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "F"
+  },
+  {
+    "ward_number": 46,
+    "candidate_name": "सुनील कुमार",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 46,
+    "candidate_name": "हिन्दुसिंह",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 46,
+    "candidate_name": "देवीलाल",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सेब",
+    "gender": "M"
+  },
+  {
+    "ward_number": 47,
+    "candidate_name": "धनराज घांची",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 47,
+    "candidate_name": "हनुमानाराम",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 47,
+    "candidate_name": "सुरेश",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सेब",
+    "gender": "M"
+  },
+  {
+    "ward_number": 48,
+    "candidate_name": "मेहबूब खां",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 48,
+    "candidate_name": "विमल",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 48,
+    "candidate_name": "बुधाराम",
+    "party_name": "निर्दलीय",
+    "symbol_name": "अलमारी",
+    "gender": "M"
+  },
+  {
+    "ward_number": 48,
+    "candidate_name": "मोहम्मद आरिफ",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सेब",
+    "gender": "M"
+  },
+  {
+    "ward_number": 49,
+    "candidate_name": "ग्यारसी देवी",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "F"
+  },
+  {
+    "ward_number": 49,
+    "candidate_name": "लाभु देवी",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "F"
+  },
+  {
+    "ward_number": 50,
+    "candidate_name": "कान्तिलाल",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 50,
+    "candidate_name": "मांगीलाल",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 51,
+    "candidate_name": "ठाकराराम",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 51,
+    "candidate_name": "नारायणसिंह",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 51,
+    "candidate_name": "भटराज",
+    "party_name": "राष्ट्रीय लोकतांत्रिक पार्टी",
+    "symbol_name": "बोतल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 51,
+    "candidate_name": "श्रवण दान",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सेब",
+    "gender": "M"
+  },
+  {
+    "ward_number": 52,
+    "candidate_name": "गोमती देवी",
+    "party_name": "राष्ट्रीय लोकतांत्रिक पार्टी",
+    "symbol_name": "बोतल",
+    "gender": "F"
+  },
+  {
+    "ward_number": 52,
+    "candidate_name": "मेनका देवी",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "F"
+  },
+  {
+    "ward_number": 52,
+    "candidate_name": "संजू देवी",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "F"
+  },
+  {
+    "ward_number": 53,
+    "candidate_name": "तालिब खां",
+    "party_name": "आम आदमी पार्टी",
+    "symbol_name": "झाडू",
+    "gender": "M"
+  },
+  {
+    "ward_number": 53,
+    "candidate_name": "मुकेश",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 53,
+    "candidate_name": "मोहनलाल",
+    "party_name": "राष्ट्रीय लोकतांत्रिक पार्टी",
+    "symbol_name": "बोतल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 53,
+    "candidate_name": "हरीश",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 53,
+    "candidate_name": "सवाई राम",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सेब",
+    "gender": "M"
+  },
+  {
+    "ward_number": 54,
+    "candidate_name": "अनवर खान",
+    "party_name": "राष्ट्रीय लोकतांत्रिक पार्टी",
+    "symbol_name": "बोतल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 54,
+    "candidate_name": "बाबु खां",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 54,
+    "candidate_name": "रामेश्वर लाल",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 55,
+    "candidate_name": "लूणाराम",
+    "party_name": "इंडियन नेशनल कांग्रेस",
+    "symbol_name": "हाथ",
+    "gender": "M"
+  },
+  {
+    "ward_number": 55,
+    "candidate_name": "सवाई राम",
+    "party_name": "भारतीय जनता पार्टी",
+    "symbol_name": "कमल",
+    "gender": "M"
+  },
+  {
+    "ward_number": 55,
+    "candidate_name": "रणवीर बेरड",
+    "party_name": "निर्दलीय",
+    "symbol_name": "सेब",
+    "gender": "M"
+  }
+]

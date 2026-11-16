@@ -1,0 +1,18 @@
+{
+  "ward": 5,
+  "wardName": "Ward No. 5 (वार्ड नं. 5)",
+  "status": "Completed (मतदान संपन्न)",
+  "totalVoters": 1308,
+  "castTotal": 865,
+  "defaultTotal": 181,
+  "deadTotal": 40,
+  "remaining": 222,
+  "percentage": 66.13,
+  "maleTotal": 679,
+  "castMale": 454,
+  "malePercentage": 66.9,
+  "femaleTotal": 629,
+  "castFemale": 411,
+  "femalePercentage": 65.3,
+  "updatedAt": "2026-09-11 19:40"
+}

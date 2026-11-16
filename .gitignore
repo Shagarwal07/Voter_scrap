@@ -1,0 +1,54 @@
+# Secrets & Credentials
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*.p12
+*service-account*.json
+*credential*.json
+
+# Build Artifacts
+node_modules/
+.next/
+out/
+build/
+dist/
+.turbo/
+
+# Python
+venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+
+# Databases
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+*.db.backup*
+
+# Heavy Scanned Data & Reports
+*.pdf
+Raw_data/**
+!Raw_data/
+!Raw_data/README.md
+outputs/**
+!outputs/
+!outputs/README.md
+**/public/reports/
+
+# Logs & Editor Artifacts
+*.log
+npm-debug.log*
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.tmp

@@ -1,0 +1,21 @@
+# Secrets & Credentials
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*.p12
+*service-account*.json
+*credential*.json
+
+# Databases & Heavy Raw Data
+data/
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+Raw_data/**/*.pdf
+
+# Internal Handbooks
+docs/INTERVIEW_PREP.md
