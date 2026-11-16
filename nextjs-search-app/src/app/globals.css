@@ -25,6 +25,24 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Devanagari Typography Normalization:
+   In Hindi (Devanagari script), letters connect through the horizontal top line (shirorekha).
+   Positive letter-spacing (tracking-*) creates artificial gaps and breaks conjuncts/matras.
+   Normal letter-spacing and Martel font ensure seamless, beautiful Hindi script rendering. */
+body.lang-hi {
+  font-family: var(--font-martel), 'Noto Sans Devanagari', 'Nirmala UI', serif;
+}
+
+body.lang-hi * {
+  letter-spacing: normal !important;
+}
+
+/* Also reset letter spacing on elements explicitly tagged with Hindi language */
+[lang="hi"],
+[lang="hi"] * {
+  letter-spacing: normal !important;
+}
+
 /* Custom Overrides for React Transliterate Dropdown */
 [class^="_ReactTransliterate_"] {
   background-color: #0f172a !important;

@@ -28,7 +28,6 @@ export default function Home() {
     isVidhanSabha,
     setSelectedWard,
     availableWards,
-    setAvailableWards: setCtxAvailableWards,
     totalVoters: ctxTotalVoters,
   } = useElection();
 
@@ -69,21 +68,6 @@ const [expandedRows, setExpandedRows] = useState<Set<number | string>>(new Set()
       newExpanded.add(id);
     }
     setExpandedRows(newExpanded);
-  };
-
-  const fetchWards = async () => {
-    try {
-      const res = await fetch(`/api/wards?election=${election}`);
-      const json = await res.json();
-      if (json.success) {
-        setCtxAvailableWards(json.data);
-        if (json.totalVoters !== undefined) {
-          setTotalVoters(json.totalVoters);
-        }
-      }
-    } catch (err) {
-      console.error('Failed to fetch wards', err);
-    }
   };
 
   const fetchResults = async (
@@ -146,9 +130,8 @@ const [expandedRows, setExpandedRows] = useState<Set<number | string>>(new Set()
     setLoading(false);
   };
 
-  // Re-fetch ward/part numbers and reset filters when election toggle changes
+  // Reset filters when election toggle changes
   useEffect(() => {
-    fetchWards();
     setWard('');
     setSelectedWard('');
     if (query.trim()) {
@@ -173,7 +156,7 @@ const [expandedRows, setExpandedRows] = useState<Set<number | string>>(new Set()
       <style
         dangerouslySetInnerHTML={{
           __html: `
-        @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Courier+Prime:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Martel:wght@400;700;900&family=Courier+Prime:wght@400;700&display=swap');
 
         .iws-noise-overlay::before {
           content: "";

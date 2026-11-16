@@ -22,6 +22,16 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      if (language === "hi") {
+        document.body.classList.add("lang-hi");
+      } else {
+        document.body.classList.remove("lang-hi");
+      }
+    }
+  }, [language]);
+
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
     localStorage.setItem("voter-lang", lang);
