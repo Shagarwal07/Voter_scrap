@@ -1,0 +1,5 @@
+pypdf
+google-genai
+google-auth
+google-cloud-storage
+tenacity
