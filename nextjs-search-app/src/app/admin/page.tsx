@@ -399,11 +399,33 @@ export default function AdminDashboard() {
                       {/* Identity */}
                       <td className="py-4 px-6">
                         <div className="flex items-center gap-3">
-                          <div className="w-9 h-9 bg-[#1E2A42] text-[#E9E1CC] font-['Courier_Prime'] font-bold flex items-center justify-center text-sm border border-[#1E2A42]">
+                          <button
+                            type="button"
+                            onClick={() => handleOpenEdit(u)}
+                            className="w-9 h-9 bg-[#1E2A42] text-[#E9E1CC] font-['Courier_Prime'] font-bold flex items-center justify-center text-sm border border-[#1E2A42] hover:bg-[#A2382B] transition-colors cursor-pointer shadow-[2px_2px_0_rgba(162,56,43,1)]"
+                            title="Click to edit user details"
+                          >
                             {initials}
-                          </div>
+                          </button>
                           <div>
-                            <div className="font-bold text-[#1E2A42]">{u.name || "Anonymous User"}</div>
+                            <div className="flex items-center gap-2">
+                              <button
+                                type="button"
+                                onClick={() => handleOpenEdit(u)}
+                                className="font-bold text-[#1E2A42] hover:text-[#A2382B] hover:underline text-left cursor-pointer transition-colors"
+                                title="Click to edit user details"
+                              >
+                                {u.name || "Anonymous User"}
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => handleOpenEdit(u)}
+                                className="text-[10px] font-['Courier_Prime'] font-bold px-1.5 py-0.5 bg-[#1E2A42]/10 text-[#1E2A42] border border-[#1E2A42]/30 hover:bg-[#A2382B] hover:text-white hover:border-[#A2382B] transition-all cursor-pointer"
+                                title="Edit user permissions & details"
+                              >
+                                ✎ Edit
+                              </button>
+                            </div>
                             <div className="text-xs font-['Courier_Prime'] text-[#4A4536] break-all max-w-xs">{u.email}</div>
                             {u.created_at && (
                               <div className="text-[10px] text-[#8A8575] mt-0.5">

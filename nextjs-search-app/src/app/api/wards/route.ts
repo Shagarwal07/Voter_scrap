@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import fs from 'fs';
 import { getDbPath, openReadonlyDb } from '@/utils/dbPath';
 import { getServerSession } from 'next-auth';
 import { authOptions } from "@/lib/authOptions";
@@ -13,6 +14,16 @@ export async function GET(request: Request) {
   const dbPath = isVidhanSabha
     ? getDbPath('vidhan_sabha', 'vidhansabha.db')
     : getDbPath('nagar_parishad', 'voters.db');
+
+  if (!fs.existsSync(dbPath)) {
+    return NextResponse.json({
+      success: true,
+      data: isVidhanSabha ? [92, 95] : Array.from({ length: 55 }, (_, i) => i + 1),
+      totalVoters: 0,
+      election,
+      electionName: isVidhanSabha ? 'विधान सभा (137-पचपदरा)' : 'नगर परिषद बालोतरा'
+    });
+  }
 
   let db: any = null;
   try {

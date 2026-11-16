@@ -77,30 +77,33 @@ async function fetchDatabases() {
 
     const storage = new Storage(storageOptions);
     const bucketName = process.env.GCS_BUCKET_NAME || process.env.ARCHIVE_BUCKET_NAME || 'ocr-voter-lists-archive';
-    const datasetName = process.env.DATASET_NAME || 'nagar_parishad';
-    const isVs = datasetName === 'vidhan_sabha';
-    const votersFilename = isVs ? 'vidhansabha.db' : 'voters.db';
-    const housesFilename = isVs ? 'vidhansabha_house.db' : 'houses.db';
-
-    console.log(`[fetch-db] Using bucket: ${bucketName} (dataset: ${datasetName})`);
     const bucket = storage.bucket(bucketName);
+    console.log(`[fetch-db] Using bucket: ${bucketName} (dual-dataset sync mode)`);
 
-    const datasetDir = path.join(dbDir, datasetName);
-    if (!fs.existsSync(datasetDir)) fs.mkdirSync(datasetDir, { recursive: true });
+    const syncDataset = async (datasetName, votersFilename, housesFilename) => {
+      const datasetDir = path.join(dbDir, datasetName);
+      if (!fs.existsSync(datasetDir)) fs.mkdirSync(datasetDir, { recursive: true });
 
-    const syncFile = async (filename) => {
-      const target = path.join(datasetDir, filename);
-      if (!fs.existsSync(target) || fs.statSync(target).size === 0) {
-        console.log(`[fetch-db] Downloading ${datasetName}/Database/${filename} ...`);
-        await bucket.file(`${datasetName}/Database/${filename}`).download({ destination: target });
-        console.log(`[fetch-db] Downloaded ${filename}`);
-      } else {
-        console.log(`[fetch-db] ${datasetName}/${filename} exists.`);
-      }
+      const syncFile = async (filename) => {
+        const target = path.join(datasetDir, filename);
+        if (!fs.existsSync(target) || fs.statSync(target).size === 0) {
+          console.log(`[fetch-db] Downloading ${datasetName}/Database/${filename} ...`);
+          await bucket.file(`${datasetName}/Database/${filename}`).download({ destination: target });
+          console.log(`[fetch-db] Downloaded ${datasetName}/${filename}`);
+        } else {
+          console.log(`[fetch-db] ${datasetName}/${filename} exists.`);
+        }
+      };
+
+      await syncFile(votersFilename).catch(err => console.warn(`[fetch-db] Could not sync ${datasetName}/${votersFilename}:`, err.message));
+      await syncFile(housesFilename).catch(err => console.warn(`[fetch-db] Could not sync ${datasetName}/${housesFilename}:`, err.message));
     };
 
-    await syncFile(votersFilename);
-    await syncFile(housesFilename).catch(err => console.warn(`[fetch-db] Could not sync ${housesFilename}:`, err.message));
+    // Sync Nagar Parishad (Municipal Council)
+    await syncDataset('nagar_parishad', 'voters.db', 'houses.db');
+
+    // Sync Vidhan Sabha (Legislative Assembly)
+    await syncDataset('vidhan_sabha', 'vidhansabha.db', 'vidhansabha_house.db');
 
   } catch (err) {
     console.error('[fetch-db] Failed to fetch databases from GCS:', err.message);

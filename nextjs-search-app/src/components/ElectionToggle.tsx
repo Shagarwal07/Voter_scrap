@@ -23,8 +23,6 @@ export default function ElectionToggle({ className = '', compact = false, active
   // Dynamic Badge for Vidhan Sabha (uses isolated vsWards to prevent cross-election race conditions)
   const vsBadge = currentWard && isVidhanSabha && currentWard !== 'all'
     ? (language === 'hi' ? `भाग ${currentWard}` : `Part ${currentWard}`)
-    : vsWards.length > 0 && vsWards.length <= 2
-    ? (language === 'hi' ? `भाग ${vsWards.join(', ')}` : `Parts ${vsWards.join(', ')}`)
     : (language === 'hi' ? 'सभी' : 'ALL');
 
   return (

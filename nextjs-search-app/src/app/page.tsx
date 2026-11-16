@@ -27,6 +27,7 @@ export default function Home() {
     election,
     isVidhanSabha,
     setSelectedWard,
+    availableWards,
     setAvailableWards: setCtxAvailableWards,
     totalVoters: ctxTotalVoters,
   } = useElection();
@@ -34,7 +35,6 @@ export default function Home() {
   const [query, setQuery] = useState('');
   const [searchType, setSearchType] = useState('voter_id');
   const [ward, setWard] = useState('');
-  const [availableWards, setAvailableWards] = useState<number[]>([]);
   const [results, setResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [totalVoters, setTotalVoters] = useState<number>(0);
@@ -76,7 +76,6 @@ const [expandedRows, setExpandedRows] = useState<Set<number | string>>(new Set()
       const res = await fetch(`/api/wards?election=${election}`);
       const json = await res.json();
       if (json.success) {
-        setAvailableWards(json.data);
         setCtxAvailableWards(json.data);
         if (json.totalVoters !== undefined) {
           setTotalVoters(json.totalVoters);

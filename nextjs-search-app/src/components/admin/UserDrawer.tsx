@@ -230,15 +230,12 @@ export default function UserDrawer({
               value={formEmail}
               onChange={(e) => setFormEmail(e.target.value)}
               required
-              disabled={!!user}
-              className="w-full bg-[#E1D7BC] border-2 border-[#1E2A42] p-3 text-sm text-[#1E2A42] focus:outline-none focus:ring-2 focus:ring-[#A2382B] shadow-inner disabled:opacity-60 disabled:cursor-not-allowed"
+              className="w-full bg-[#E1D7BC] border-2 border-[#1E2A42] p-3 text-sm text-[#1E2A42] focus:outline-none focus:ring-2 focus:ring-[#A2382B] shadow-inner font-['Courier_Prime']"
               placeholder="volunteer@gmail.com"
             />
-            {!!user && (
-              <p className="text-[11px] text-[#A2382B] mt-1 font-bold">
-                OAuth identifier is immutable after creation.
-              </p>
-            )}
+            <p className="text-[11px] text-[#6B6944] mt-1">
+              Google OAuth identity or login email. Editable by administrators.
+            </p>
           </div>
 
           {/* Role and Tier Grid */}
