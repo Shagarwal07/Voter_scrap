@@ -43,6 +43,7 @@ const [expandedRows, setExpandedRows] = useState<Set<number | string>>(new Set()
   const [quotaError, setQuotaError] = useState<{ message: string; code: string } | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
   const [showOath, setShowOath] = useState(false);
+  const [isNavigatingHome, setIsNavigatingHome] = useState(false);
 
   // Pagination State
   const [currentPage, setCurrentPage] = useState(1);
@@ -235,16 +236,34 @@ const [expandedRows, setExpandedRows] = useState<Set<number | string>>(new Set()
           {/* Action Buttons Toolbar */}
           <div className="w-full sm:w-auto flex items-center gap-1.5 sm:gap-2 font-['Courier_Prime']">
             {/* Home Portal Button (served via NEXT_PUBLIC_FRONTEND_URL) */}
-            <a
-              href={process.env.NEXT_PUBLIC_FRONTEND_URL || '/'}
-              className="h-8 sm:h-9 px-2 sm:px-3 bg-[#1E2A42] border border-[#1E2A42] text-[#E9E1CC] text-[11px] sm:text-xs md:text-sm font-bold flex items-center justify-center gap-1.5 shadow-[2px_2px_0_rgba(30,42,66,1)] hover:translate-y-[1px] hover:translate-x-[1px] hover:shadow-[1px_1px_0_rgba(30,42,66,1)] transition-all uppercase tracking-wider"
+            <button
+              type="button"
+              onClick={() => {
+                if (isNavigatingHome) return;
+                setIsNavigatingHome(true);
+                window.location.href = process.env.NEXT_PUBLIC_FRONTEND_URL || '/';
+              }}
+              disabled={isNavigatingHome}
+              className="h-8 sm:h-9 px-2 sm:px-3 bg-[#1E2A42] border border-[#1E2A42] text-[#E9E1CC] text-[11px] sm:text-xs md:text-sm font-bold flex items-center justify-center gap-1.5 shadow-[2px_2px_0_rgba(30,42,66,1)] hover:translate-y-[1px] hover:translate-x-[1px] hover:shadow-[1px_1px_0_rgba(30,42,66,1)] transition-all uppercase tracking-wider disabled:opacity-75 disabled:cursor-wait cursor-pointer shrink-0"
               title={t('Home Portal', 'होम पोर्टल')}
             >
-              <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-              </svg>
-              {/* Compact Icon */}
-            </a>
+              {isNavigatingHome ? (
+                <>
+                  <svg className="animate-spin w-3.5 h-3.5 text-[#E9E1CC]" viewBox="0 0 24 24" fill="none">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                  </svg>
+                  <span className="hidden sm:inline text-xs">{language === 'hi' ? 'खुल रहा है...' : 'Loading...'}</span>
+                </>
+              ) : (
+                <>
+                  <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                  </svg>
+                  <span className="hidden sm:inline text-xs">{language === 'hi' ? 'होम' : 'Home'}</span>
+                </>
+              )}
+            </button>
 
             {/* Street Finder */}
             <Link

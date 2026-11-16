@@ -1,11 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { Search, Map, Users, FileText, Home, MapPin } from "lucide-react";
+import { Search, Map, Users, FileText, Home, MapPin, Loader2 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function Header() {
   const { language, toggleLanguage, t } = useLanguage();
+  const [isNavigatingSearch, setIsNavigatingSearch] = useState(false);
 
   return (
     <>
@@ -109,13 +111,28 @@ export default function Header() {
             <span className="w-2 h-2 rounded-full bg-[#E9E1CC] group-hover:bg-[#A2382B] animate-pulse shrink-0"></span>
             <span>{t("Live Updates", "लाइव अपडेट")}</span>
           </Link>
-          <a
-            href={process.env.NEXT_PUBLIC_SEARCH_APP_URL || "http://localhost:3001"} 
-            className="group col-span-2 md:col-span-1 xl:col-span-1 w-full xl:w-auto justify-center px-4 py-2.5 md:px-4 md:py-2 bg-[#1E2A42] border-[1.5px] border-[#1E2A42] text-[#E9E1CC] font-bold flex items-center gap-1.5 rounded-full hover:bg-transparent hover:text-[#1E2A42] transition-all duration-300 uppercase tracking-widest shadow-md hover:shadow-none whitespace-nowrap"
+          <button
+            type="button"
+            onClick={() => {
+              if (isNavigatingSearch) return;
+              setIsNavigatingSearch(true);
+              window.location.href = process.env.NEXT_PUBLIC_SEARCH_APP_URL || "http://localhost:3001";
+            }}
+            disabled={isNavigatingSearch}
+            className="group col-span-2 md:col-span-1 xl:col-span-1 w-full xl:w-auto justify-center px-4 py-2.5 md:px-4 md:py-2 bg-[#1E2A42] border-[1.5px] border-[#1E2A42] text-[#E9E1CC] font-bold flex items-center gap-1.5 rounded-full hover:bg-transparent hover:text-[#1E2A42] transition-all duration-300 uppercase tracking-widest shadow-md hover:shadow-none whitespace-nowrap disabled:opacity-75 disabled:cursor-wait cursor-pointer"
           >
-            <Search className="w-4 h-4 shrink-0" />
-            <span>{t("Search Database", "डेटाबेस खोजें")}</span>
-          </a>
+            {isNavigatingSearch ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin shrink-0 text-[#E9E1CC] group-hover:text-[#1E2A42]" />
+                <span>{t("Connecting...", "जुड़ रहे हैं...")}</span>
+              </>
+            ) : (
+              <>
+                <Search className="w-4 h-4 shrink-0" />
+                <span>{t("Search Database", "डेटाबेस खोजें")}</span>
+              </>
+            )}
+          </button>
         </nav>
       </header>
     </>

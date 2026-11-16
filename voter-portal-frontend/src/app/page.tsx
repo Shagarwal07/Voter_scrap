@@ -1,12 +1,14 @@
 "use client";
 
-import { Search, Map, Users, ArrowRight, FileText, MapPin, Activity } from "lucide-react";
+import { useState } from "react";
+import { Search, Map, Users, ArrowRight, FileText, MapPin, Activity, Loader2 } from "lucide-react";
 import Link from "next/link";
 import AdCarousel from "@/components/AdCarousel";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function Home() {
   const { t } = useLanguage();
+  const [isNavigatingSearch, setIsNavigatingSearch] = useState(false);
 
   const features = [
     {
@@ -91,14 +93,29 @@ export default function Home() {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4">
-          <a
-            href={process.env.NEXT_PUBLIC_SEARCH_APP_URL || "http://localhost:3001"}
-            className="flex-1 bg-[#1E2A42] text-[#E9E1CC] font-bold py-4 px-6 hover:bg-[#A2382B] transition-colors uppercase tracking-widest text-xs font-courier flex items-center justify-center group shadow-[4px_4px_0_rgba(30,42,66,1)] hover:-translate-y-[2px] active:translate-y-0 active:shadow-none"
+          <button
+            type="button"
+            onClick={() => {
+              if (isNavigatingSearch) return;
+              setIsNavigatingSearch(true);
+              window.location.href = process.env.NEXT_PUBLIC_SEARCH_APP_URL || "http://localhost:3001";
+            }}
+            disabled={isNavigatingSearch}
+            className="flex-1 bg-[#1E2A42] text-[#E9E1CC] font-bold py-4 px-6 hover:bg-[#A2382B] transition-colors uppercase tracking-widest text-xs font-courier flex items-center justify-center group shadow-[4px_4px_0_rgba(30,42,66,1)] hover:-translate-y-[2px] active:translate-y-0 active:shadow-none disabled:opacity-80 disabled:cursor-wait cursor-pointer"
           >
-            <Search className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform" />
-            {t("Search Master Database", "मास्टर डेटाबेस खोजें")}
-            <ArrowRight className="ml-auto w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </a>
+            {isNavigatingSearch ? (
+              <>
+                <Loader2 className="mr-3 h-5 w-5 animate-spin text-[#E9E1CC]" />
+                <span>{t("Connecting to Database...", "डेटाबेस से जुड़ रहे हैं...")}</span>
+              </>
+            ) : (
+              <>
+                <Search className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform" />
+                <span>{t("Search Master Database", "मास्टर डेटाबेस खोजें")}</span>
+                <ArrowRight className="ml-auto w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </>
+            )}
+          </button>
           <Link
             href="/ward-pdfs"
             className="flex-1 bg-[#2F5B36] text-[#E9E1CC] font-bold py-4 px-6 hover:bg-[#1E2A42] transition-colors uppercase tracking-widest text-xs font-courier flex items-center justify-center group shadow-[4px_4px_0_rgba(30,42,66,1)] hover:-translate-y-[2px] active:translate-y-0 active:shadow-none"
