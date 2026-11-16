@@ -245,7 +245,7 @@ export default function HouseSearch() {
                       if (apiError) setApiError(null);
                     }}
                     lang="hi"
-                    placeholder={t('house_member_placeholder')}  
+                    placeholder={t('house_member_placeholder')}
                     containerClassName={`w-full ${query.length === 0 ? "hide-suggestions" : ""}`}
                     className="w-full bg-[#E9E1CC] border-[1.5px] border-[#1E2A42] px-4 py-3.5 font-['Courier_Prime'] text-base md:text-lg focus:outline-none focus:ring-2 focus:ring-[#A2382B] focus:border-transparent rounded-none"
                   />

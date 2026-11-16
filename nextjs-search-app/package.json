@@ -11,6 +11,7 @@
   "dependencies": {
     "@google-cloud/storage": "^8.0.1",
     "@next/third-parties": "^16.3.4",
+    "@tailwindcss/postcss": "^4",
     "next": "16.3.0",
     "next-auth": "^4.24.15",
     "pg": "^8.23.1",
@@ -18,17 +19,16 @@
     "react-dom": "19.2.8",
     "react-transliterate": "^1.1.9",
     "sqlite": "^5.1.1",
-    "sqlite3": "5.1.7"
+    "sqlite3": "5.1.7",
+    "tailwindcss": "^4"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/pg": "^8.23.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.0",
-    "tailwindcss": "^4",
     "typescript": "^5"
   }
 }
