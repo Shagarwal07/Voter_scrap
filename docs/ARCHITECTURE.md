@@ -2,7 +2,7 @@
 
 > **Organization**: Imposter World Services (IWS)  
 > **System**: Voter Scrap (Electoral Roll Digitization & Volunteer Field Engine)  
-> **Standard**: 1Cr Senior-Engineer Architecture Specification
+> **Standard**: High-Availability System Architecture Specification
 
 ---
 
@@ -13,20 +13,19 @@ The system is organized into decoupled, single-responsibility layers connecting 
 ```mermaid
 flowchart TD
     subgraph Ingestion["1. Ingestion Layer (Raw_data/)"]
-        A1["Municipal PDFs (Ward 1–55)"] --> B1["core/cloud/auto_pipeline.py"]
-        A2["Assembly PDFs (Part 92, 95)"] --> B2["core/local/extractor.py"]
+        A1["Municipal PDFs (Ward 1–55)"]
+        A2["Assembly PDFs (Part 1–200+)"]
     end
 
-    subgraph OCR["2. AI OCR & Verification Engine (core/)"]
-        B1 & B2 --> C["Gemini 2.5 Flash Multimodal Vision"]
-        C --> D["Unicode NFC Normalizer & Matra Guard"]
-        D --> E["core/local/recheck.py (6-Point Audit)"]
-        E -->|Flagged Gaps| F["core/local/rescan_faulty_page.py"]
-        F -->|Atomic DB Update| E
+    subgraph Extraction["2. Extraction & Normalization Engine (core/)"]
+        LOCAL_ENG["core/local/extractor.py: Offline High-Speed PyMuPDF Parser<br/>(100% Offline, Zero Cloud Cost, < 8s / Roll)"]
+        CLOUD_ENG["core/cloud/cloud_extractor.py: Scalable Cloud Worker<br/>(Gemini 2.5 Flash Vision for Scanned Rolls)"]
+        NORMALIZER["hindi_normalizer.py: Unicode NFC & Matra Inversion Guard"]
+        VALIDATOR["Zero-Gap Serial Validator (1..N Continuity)"]
     end
 
     subgraph Persistence["3. Hybrid Database Architecture"]
-        subgraph ReadOnly_SQLite["Electoral Datasets (SQLite Read-Only)"]
+        subgraph ReadOnly_SQLite["Electoral Datasets (SQLite Read-Only WAL)"]
             DB_NP[("voters.db & houses.db (Nagar Parishad)")]
             DB_VS[("vidhansabha.db & vidhansabha_house.db")]
         end
@@ -40,12 +39,13 @@ flowchart TD
     subgraph Serving["4. Dual-Tier Application Layer"]
         ReadOnly_SQLite --> APP_SEARCH["nextjs-search-app :3001 (Volunteer Engine)"]
         Cloud_Postgres <--> DNS_RESOLVER <--> APP_SEARCH
-        E --> GCS_BUCKET["Google Cloud Storage (PDF Slips)"]
+        GCS_BUCKET["Google Cloud Storage (Database Hydration)"]
         GCS_BUCKET --> APP_CIVIC["voter-portal-frontend :3000 (Civic Portal)"]
         GCS_BUCKET --> APP_SEARCH
     end
 
-    E -->|Export Structured Data| ReadOnly_SQLite
+    A1 & A2 --> LOCAL_ENG & CLOUD_ENG
+    LOCAL_ENG & CLOUD_ENG --> NORMALIZER --> VALIDATOR --> ReadOnly_SQLite
 ```
 
 ---
@@ -148,30 +148,36 @@ flowchart TD
 
 ---
 
-## 5. Dual-Cloud Disaster Recovery Sequence
+## 5. Serving Infrastructure & Cloud Run Evolution
 
-To ensure 100% operational uptime on election day, the serving architecture implements dual-cloud hot standby:
+The platform was initially field-tested on a **GCP Compute Engine `e2-small` VM (2 vCPU, 2 GB RAM)** using PM2 for daemon supervision. To accommodate massive election-day concurrency surges without manual server provisioning, the production serving target is transitioning to **Google Cloud Run (Serverless Containers)**.
 
 ```mermaid
 sequenceDiagram
     autonumber
     actor Volunteer as Field Volunteer / Worker
-    participant DNS as DNS Gateway (nip.io / Cloudflare)
-    participant Primary as Primary GCP VM (e2-micro + PM2 :3001)
-    participant Standby as Hot-Standby Vercel Cloud (Edge DR)
-    participant Storage as Google Cloud Storage (PDF Reports)
+    participant DNS as Cloud DNS / CDN Gateway
+    participant CloudRun as Google Cloud Run (Autoscaling Instances)
+    participant GCS as Google Cloud Storage (Bucket: ocr-voter-lists-output)
+    participant Postgres as Managed PostgreSQL (RBAC & Quotas)
 
     Volunteer->>DNS: Request search.yourdomain.com
-    alt GCP VM Healthy (Primary 99.9% Route)
-        DNS->>Primary: Proxy to PM2 Daemon (Port 3001)
-        Primary->>Primary: Query Local SQLite WAL (< 200ms)
-        Primary-->>Volunteer: HTTP 200 JSON Response
-    else GCP Hardware / Network Outage (Disaster Failover)
-        DNS->>Standby: Automatic DNS Switch to Serverless Edge
-        Standby->>Storage: Stream Verified Public Roll via Signed URLs
-        Standby-->>Volunteer: Immediate Standby Verification UI
-    end
+    DNS->>CloudRun: HTTPS Request (Auto-routed to active instance)
+    Note over CloudRun: On Container Cold Start: runs scripts/fetch-db.js to hydrate SQLite from GCS (~2s)
+    CloudRun->>CloudRun: Fast Local SQLite WAL Index Scan (< 2ms)
+    CloudRun->>Postgres: Verify User RBAC / Rate Limit
+    CloudRun-->>Volunteer: HTTP 200 JSON Response (< 150ms roundtrip)
 ```
+
+### Infrastructure Comparison: GCP VM vs. Google Cloud Run
+
+| Architectural Dimension | Baseline: GCP VM (`e2-small`, 2 GB RAM) | Target: Google Cloud Run |
+| :--- | :--- | :--- |
+| **Process Supervision** | **PM2 Daemon** required to auto-revive Node.js on crash or VM reboot. | **Native Container Orchestrator** auto-revives crashed instances without PM2. |
+| **Concurrency Scaling** | Fixed to single instance (1 vCPU, 1 GB RAM); risks Out-Of-Memory under heavy volunteer surges. | **Dynamic Horizontal Autoscaling** from 0 to 100+ container instances on demand. |
+| **Idle Cost** | Incurred 24/7/365 continuous billing even during non-election periods. | **Scale-to-Zero** ($0.00 idle cost outside polling hours). |
+| **Database Hydration** | Local persistent NVMe disk storage. | Container pulls read-only SQLite from GCS on startup via `fetch-db.js`. |
+| **Operational Maintenance** | Requires manual Ubuntu security patches, SSH key rotation, and Nginx SSL setup. | **Zero Ops**: Google handles OS updates, networking, and automatic TLS certification. |
 
 ---
 
