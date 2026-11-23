@@ -1,0 +1,25 @@
+name: Render Web Service Keep-Alive
+
+on:
+  schedule:
+    # Runs every 14 minutes (Render free tier sleeps after 15 minutes of inactivity)
+    - cron: '*/14 * * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+
+jobs:
+  ping-render:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Render Service
+        env:
+          RENDER_URL: ${{ secrets.RENDER_APP_URL }}
+        run: |
+          TARGET_URL="${RENDER_URL:-https://voter-search-app.onrender.com}"
+          echo "Pinging ${TARGET_URL}/api/health..."
+          STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 "${TARGET_URL}/api/health")
+          echo "Response HTTP Status: ${STATUS_CODE}"
+          if [ "${STATUS_CODE}" -ge 200 ] && [ "${STATUS_CODE}" -lt 400 ]; then
+            echo "Render service is awake and healthy!"
+          else
+            echo "Warning: Received HTTP ${STATUS_CODE}"
+          fi
