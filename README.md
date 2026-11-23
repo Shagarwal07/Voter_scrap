@@ -14,12 +14,12 @@
   [![Vercel Edge Failover](https://img.shields.io/badge/Vercel-Zero_Downtime_Failover-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/)
 
   <p align="center">
-    <a href="#-1cr-senior-engineer-system-architecture"><b>Architecture</b></a> •
+    <a href="#-system-architecture"><b>Architecture</b></a> •
     <a href="#-dual-election-jurisdiction-support"><b>Dual Election</b></a> •
     <a href="#-real-world-production-field-analytics"><b>Field Analytics</b></a> •
-    <a href="#-key-architectural-innovations"><b>Features</b></a> •
+    <a href="#-key-architectural-features"><b>Features</b></a> •
     <a href="#-quick-start--operational-commands"><b>Quick Start</b></a> •
-    <a href="#-deep-architecture--technical-documentation"><b>Deep Docs</b></a>
+    <a href="#-engineering-documentation"><b>Docs</b></a>
   </p>
 
   <p align="center">
@@ -32,21 +32,21 @@
 
 ---
 
-## ⚡ The 1Cr Impact: Paper Rolls vs. Intelligent Cloud
+## ⚡ The Operational Impact: Paper Rolls vs. Intelligent Cloud
 
-| Dimension | 🏛️ Traditional Paper Polling Station | ⚡ 1Cr Voter Scrap Platform |
+| Dimension | 🏛️ Traditional Paper Polling Station | ⚡ Voter Search Platform |
 | :--- | :--- | :--- |
 | **Lookup Latency** | 3 to 5 minutes of page-flipping per citizen | **< 2.0 Seconds** instant multi-field query |
 | **Language Barrier** | Static Devanagari text, illegible stamps | **Real-Time Phonetic Transliteration** (English $\to$ Hindi) |
 | **Field Coordination** | Blind street canvassing with unorganized lists | **Household & Street Clustering (`/house`)** |
 | **Election Modes** | Rigid single-ballot focus | **Dual Election Engine** (Municipal Council + Legislative Assembly) |
 | **Concurrency & Rush** | Bottlenecked by physical list sharing | **23+ Concurrent Booth Workers** with zero contention |
-| **Cost to Process** | ₹8,000+ via unoptimized OCR | **~$2.00 Total** via Gemini 2.5 Flash surgical pipeline |
-| **Failover Guarantee** | Single point of failure | **Dual-Cloud Redundancy** (GCP VM + Vercel Edge DR) |
+| **Cost to Process** | High manual data-entry cost | **Zero Local Cost** offline or ~$2.00 via Gemini Flash cloud pipeline |
+| **Failover Guarantee** | Single point of failure | **Dual-Cloud Redundancy** (Primary VM + Standby Edge DR) |
 
 ---
 
-## 🏛️ 1Cr Senior-Engineer System Architecture
+## 🏛️ System Architecture
 
 The platform operates on a **4-tier decoupled pipeline**, transitioning from raw scanned PDFs down to a dual-database serving cluster with edge failover:
 
@@ -54,14 +54,13 @@ The platform operates on a **4-tier decoupled pipeline**, transitioning from raw
 flowchart TD
     subgraph Tier1["Tier 1: Ingestion & Staging (Raw_data/)"]
         PDF_NP["Municipal Rolls: Balotra Wards (1–55)"]
-        PDF_VS["Assembly Rolls: 137-Pachpadra Parts (92, 95)"]
+        PDF_VS["Assembly Rolls: 137-Pachpadra Parts"]
     end
 
-    subgraph Tier2["Tier 2: AI OCR & Verification Engine (core/)"]
-        LOCAL_EXT["extractor.py: Multithreaded Gemini Vision OCR"]
-        CLOUD_EXT["cloud_extractor.py: High-Throughput GCS Worker"]
-        HEALER["rescan_faulty_page.py: Surgical Page Healer"]
-        AUDIT["recheck.py: 6-Point Quality Assurance Auditor"]
+    subgraph Tier2["Tier 2: Extraction & Quality Engine (core/)"]
+        LOCAL_EXT["core/local/extractor.py: Offline Text Engine & Devanagari Normalizer"]
+        CLOUD_EXT["core/cloud/cloud_extractor.py: Scalable GCS Worker & Gemini Vision"]
+        AUDIT["Zero-Gap Serial Validator & NFC Normalizer"]
     end
 
     subgraph Tier3["Tier 3: Dual Database Storage Layer"]
@@ -78,30 +77,26 @@ flowchart TD
     subgraph Tier4["Tier 4: Dual-Cloud Production Serving Layer"]
         USER(["Booth Volunteer / Public Citizen"])
         EDGE_GATEWAY{"Edge Router / Middleware"}
-        GCP_VM["Primary: GCP VM (PM2 Daemon on Port 3001)"]
-        VERCEL["Hot Standby: Vercel Serverless (Edge DR)"]
+        PRIMARY_SRV["Primary: Production App Server (Port 3001)"]
+        EDGE_SRV["Standby: Edge Serverless (Disaster Recovery)"]
         GCS_SYNC["scripts/fetch-db.js (GCS Cloud Sync)"]
     end
 
     PDF_NP --> LOCAL_EXT & CLOUD_EXT
     PDF_VS --> LOCAL_EXT & CLOUD_EXT
 
-    LOCAL_EXT --> SQLITE_NP & SQLITE_VS
-    CLOUD_EXT --> SQLITE_NP & SQLITE_VS
-
-    SQLITE_NP & SQLITE_VS --> AUDIT
-    AUDIT -->|Flag Sequence Gaps| HEALER
-    HEALER --> SQLITE_NP & SQLITE_VS
+    LOCAL_EXT --> AUDIT --> SQLITE_NP & SQLITE_VS
+    CLOUD_EXT --> AUDIT --> SQLITE_NP & SQLITE_VS
 
     USER --> EDGE_GATEWAY
-    EDGE_GATEWAY -->|JWT Edge Verification| GCP_VM
-    EDGE_GATEWAY -.->|Disaster Failover| VERCEL
+    EDGE_GATEWAY -->|JWT Edge Verification| PRIMARY_SRV
+    EDGE_GATEWAY -.->|Disaster Failover| EDGE_SRV
 
-    GCP_VM --> SQLITE_Data
-    GCP_VM --> DNS_FALLBACK --> PG_AUTH
+    PRIMARY_SRV --> SQLITE_Data
+    PRIMARY_SRV --> DNS_FALLBACK --> PG_AUTH
 
-    VERCEL --> GCS_SYNC --> SQLITE_Data
-    VERCEL --> PG_AUTH
+    EDGE_SRV --> GCS_SYNC --> SQLITE_Data
+    EDGE_SRV --> PG_AUTH
 ```
 
 ---
@@ -153,33 +148,33 @@ pie title Active Production Query Types (Ward 5 Polling Morning)
 | **Active Field Volunteers** | **35+ Users** | Booth managers navigating voters simultaneously |
 | **Peak 30-Min Concurrency** | **23 Concurrent Users** | 100% organic field adoption without a single dropped packet |
 | **Query Latency** | **< 200 ms** (Cold) / **< 35 ms** (Warm) | Powered by indexed SQLite WAL singleton on NVMe SSD |
-| **Instance RAM Overhead** | **~210 MB Peak** | Handled on a 1GB `e2-micro` VM with zero OOM crashes |
+| **Instance RAM Overhead** | **~210 MB Peak** | Handled on a 1GB micro-instance with zero OOM crashes |
 
 ---
 
 ## 🗂️ Monorepo Subsystem Map
 
-Every directory in this repository is strictly decoupled and maintains its own scoped documentation:
+Every directory in this repository is decoupled and maintains its own scoped documentation:
 
 | Directory | Subsystem Role | Tech Stack | Status | Documentation |
 | :--- | :--- | :--- | :--- | :--- |
-| [`core/`](core/) | **AI OCR & Quality Engine** | Python 3.11, Gemini 2.5 Flash, Tenacity | `Microservice` | [core/README.md](core/README.md) |
+| [`core/`](core/) | **Extraction & Quality Engine** | Python 3.11, PyMuPDF, Gemini 2.5 Flash | `Microservice` | [core/README.md](core/README.md) |
 | [`Raw_data/`](Raw_data/) | **Raw Ingestion Staging** | Statutory Public PDF Electoral Rolls | `Data Ingestion` | [Raw_data/README.md](Raw_data/README.md) |
 | [`outputs/`](outputs/) | **Processed Datasets & Schemas** | CSV, JSON, Multi-Tab Excel Workbooks | `Artifacts` | [outputs/README.md](outputs/README.md) |
 | [`scripts/`](scripts/) | **Automation & Maintenance** | Python, PowerShell, Node.js | `DevOps Tooling` | [scripts/README.md](scripts/README.md) |
 | [`nextjs-search-app/`](nextjs-search-app/) | **Volunteer Search & Admin Engine** | Next.js 16, React 19, SQLite WAL, PostgreSQL, NextAuth | `Port 3001` | [nextjs-search-app/README.md](nextjs-search-app/README.md) |
 | [`voter-portal-frontend/`](voter-portal-frontend/) | **Civic Engagement Portal & GIS** | Next.js 16, Leaflet Maps, Cloudflare Turnstile | `Port 3000` | [voter-portal-frontend/README.md](voter-portal-frontend/README.md) |
-| [`docs/`](docs/) | **1Cr Architecture & Runbooks** | High-Availability Specs, GA4 Proofs, Runbooks | `Handbook` | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
+| [`docs/`](docs/) | **Engineering Architecture & Runbooks** | High-Availability Specs, GA4 Proofs, Runbooks | `Handbook` | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
 
 ---
 
-## ✨ Key Architectural Innovations
+## ✨ Key Architectural Features
 
-### 1. High-Accuracy Multimodal AI OCR (`core/`)
-* **Gemini 2.5 Flash Vision**: Single-page high-resolution extraction preventing row-splitting matra corruption.
-* **Devanagari Normalization**: Strict Unicode NFC normalization, Devanagari digit translation (`DEV_NUM_MAP`), Hindi/English label prefix stripping, and deletion stamp detection (`DELETED`, `विलोपित`, serial prefixes `S`, `E`, `R`).
-* **Zero-Matra-Drop Instructions**: Specialized prompt engineering preserving delicate top diacritics (शिरोरेखा: े, ै, ो, ौ, ं) and bottom ligatures (ु, ू, ृ).
-* **Automated Quality Audit (`recheck.py`)**: 6-point verification algorithm testing serial continuity and flagging low-density pages for surgical healing.
+### 1. High-Accuracy Extraction & Normalization (`core/`)
+* **Local Offline Engine (`core/local/extractor.py`)**: High-speed, 100% offline text extraction with zero external API dependencies.
+* **Devanagari Normalization (`hindi_normalizer.py`)**: Corrects inverted short-`ि` vowel placement, restores line-split Hindi words (`राके श` $\to$ `राकेश`), and standardizes honorifics.
+* **Continuous Sequence Validation**: Validates 0-gap serial continuity ($1, 2, 3 \dots N$) on write and flags unlinked voter cards.
+* **Cloud Batch Processing (`core/cloud/`)**: Scalable worker engine with Google Cloud Storage integration and Gemini Vision for scanned rolls.
 
 ### 2. Dual-Engine Storage Architecture
 * **Electoral Data (SQLite Read-Only)**: Scalable, zero-latency local B-Tree storage opened with `sqlite3.OPEN_READONLY` mode. Zero database lock contention during concurrent field volunteer queries.
@@ -190,14 +185,14 @@ Every directory in this repository is strictly decoupled and maintains its own s
 * **Hierarchical Beat Clearance**: Ensures field volunteers only view households within their assigned street or ward beat.
 
 ### 4. Anti-Scraping & Privacy Defense Tier
-* **Public EPIC Restriction**: Unauthenticated users are strictly confined to Voter ID lookups; name searches require Google login.
-* **Rate Limits & Pagination Cap**: Free users capped at 4 searches/day and `page <= 4`. Voter ID numbers are dynamically masked (e.g. `RJ/***345`).
+* **Public EPIC Restriction**: Unauthenticated users are strictly confined to Voter ID lookups; name searches require login.
+* **Rate Limits & Pagination Cap**: Free users capped at daily search quotas and pagination limits. Voter ID numbers are dynamically masked (e.g. `RJ/***345`).
 
 ---
 
 ## ⚡ Quick Start & Operational Commands
 
-### 1. Run Local AI OCR Extraction
+### 1. Run Local Extraction (100% Offline)
 ```bash
 # Clone the repository
 git clone https://github.com/shubham70231/Voter_scrap.git
@@ -206,11 +201,11 @@ cd Voter_scrap
 # Install Python requirements
 pip install -r requirements.txt
 
-# Configure Gemini API Key
-cp .env.example .env
+# Extract a Vidhan Sabha Part Roll directly to SQLite
+python core/local/extractor.py "Raw_data/vidhan_sabha/raw_pdf_rolls/AC-137-Part-92.pdf"
 
-# Extract a PDF directly to SQLite
-python core/local/extractor.py "Raw_data/Nagar_parishad/Ward No-005-Part No-001.pdf" --ward 5
+# Or extract a Nagar Parishad Ward Roll:
+python core/local/extractor.py "Raw_data/nagar_parishad/NP-Ward-5.pdf" --ward 5
 ```
 
 ### 2. Launch the Volunteer Search Engine (`nextjs-search-app`)
@@ -245,14 +240,13 @@ npm run dev
 
 ---
 
-## 📚 Deep Architecture & Technical Documentation
+## 📚 Engineering Documentation
 
 For in-depth operational runbooks, system failovers, and engineering metrics, explore our technical documentation:
 
 * 🏛️ **[System Architecture & Failover Specs](docs/ARCHITECTURE.md)**: Deep dive into the 4-tier pipeline, dual-cloud failover, dual database (SQLite + Postgres), and port topology.
 * 📊 **[Live Production Analytics](docs/ANALYTICS.md)**: Verified Google Analytics 4 traffic proofs, real-time concurrency spikes, and sub-200ms latency benchmarks from the live Ward 5 deployment.
-* 🛠️ **[Operations & Runbook Matrix](docs/OPERATIONS.md)**: Cheatsheet for daily batch OCR, surgical page healing, PM2 process management, and atomic database backups.
-* 🎯 **[Developer Interview & System Q&A Handbook](docs/INTERVIEW_PREP.md)**: 1Cr technical decisions (why SQLite WAL + Postgres hybrid, two-stage fuzzy search pruning, and RBAC security models).
+* 🛠️ **[Operations & Runbook Matrix](docs/OPERATIONS.md)**: Procedures for batch extraction, cloud synchronization, PM2 process management, and atomic database backups.
 
 ---
 

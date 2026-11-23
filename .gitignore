@@ -1,31 +1,28 @@
-# Secrets & Credentials
+# ==============================================================================
+# Voter_scrap Root .gitignore (Data Pipeline & Python Core)
+# Client and Server frontend apps maintain their own isolated .gitignore files.
+# ==============================================================================
+
+# Secrets & Cloud Credentials
 .env
-.env.local
-.env.*.local
+.env.*
 *.pem
 *.key
 *.p12
 *service-account*.json
 *credential*.json
 
-# Build Artifacts
-node_modules/
-.next/
-out/
-build/
-dist/
-.turbo/
-
-# Python
+# Python Runtime & Virtual Environments
 venv/
 env/
+.venv/
 __pycache__/
 *.py[cod]
 *$py.class
 .pytest_cache/
 .coverage
 
-# Databases
+# SQLite Databases & Working Journals
 *.db
 *.db-journal
 *.db-wal
@@ -34,7 +31,7 @@ __pycache__/
 *.sqlite3
 *.db.backup*
 
-# Heavy Scanned Data & Reports
+# Heavy Scanned PDFs & Extracted Outputs (Preserve staging READMEs)
 *.pdf
 Raw_data/**
 !Raw_data/
@@ -42,13 +39,14 @@ Raw_data/**
 outputs/**
 !outputs/
 !outputs/README.md
-**/public/reports/
 
-# Logs & Editor Artifacts
-*.log
-npm-debug.log*
-.vscode/
-.idea/
+# Internal Documentation & Prep
+docs/INTERVIEW_PREP.md
+
+# OS & Editor Artifacts
 .DS_Store
 Thumbs.db
 *.tmp
+*.log
+.vscode/
+.idea/

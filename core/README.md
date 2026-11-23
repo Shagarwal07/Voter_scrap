@@ -1,155 +1,219 @@
 <div align="center">
 
-# ⚡ Core AI Extraction & OCR Engine (`core/`)
+# ⚡ Core Electoral Roll Ingestion & Extraction Engine (`core/`)
 
-**High-Throughput Multimodal Document Parsing & Quality Healing for Indian Electoral Rolls**
+### *Dual-Engine Architecture: Zero-Cost Local Text Extraction + Cloud Multimodal Vision AI*
 
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![PyMuPDF](https://img.shields.io/badge/PDF_Engine-PyMuPDF_1.26-red?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://pymupdf.readthedocs.io/)
 [![Gemini 2.5 Flash](https://img.shields.io/badge/Vision_Model-Gemini_2.5_Flash-orange?style=for-the-badge&logo=google&logoColor=white)](https://cloud.google.com/vertex-ai)
-[![Google GenAI SDK](https://img.shields.io/badge/SDK-google--genai-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white)](https://pypi.org/project/google-genai/)
-[![Tenacity](https://img.shields.io/badge/Resilience-Tenacity_Exponential_Backoff-success?style=for-the-badge)](https://github.com/jd/tenacity)
+[![SQLite WAL Mode](https://img.shields.io/badge/SQLite-WAL_Mode-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://sqlite.org/)
 [![Docker](https://img.shields.io/badge/Container-Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 
 </div>
 
 ---
 
-## 📖 Overview
+## 📖 System Overview
 
-The **`core/`** engine converts complex, multi-column raster and scanned Hindi Electoral Roll PDFs into structured, queryable SQLite datasets. Utilizing **Gemini 2.5 Flash Vision** with zero-matra-drop prompt engineering, the system achieves **>99% OCR fidelity** on complex Devanagari ligatures (संयुक्ताक्षर) and halants.
+The **`core/`** engine provides an end-to-end extraction and quality-healing pipeline for Indian Electoral Rolls. The engine supports **two complementary extraction pathways**:
+
+1. **`core/local/` (High-Performance Local Regex Engine):**
+   - Designed for digitally rendered vector/text PDFs (e.g., Vidhan Sabha rolls).
+   - **100% Free & Local:** Uses PyMuPDF with non-greedy bounded `re.DOTALL` pattern matching.
+   - **Throughput:** Processes ~850–1,000 voter cards in under **8 seconds per PDF** (< 50MB RAM).
+   - **Zero Sequence Gaps:** Tested across 61 polling booths (51,000+ voters) with 100% sequence continuity.
+   - **Embedded Devanagari Normalization:** Automatically repairs ECI typographic defects (visual-order short-`ि`, line-break split words like `राके श` $\to$ `राकेश`, and detached `कुमार`).
+
+2. **`core/cloud/` (Multimodal Cloud Vision AI Pipeline):**
+   - Designed for physical paper scans, noisy photocopies, or rasterized municipal rolls (e.g., Nagar Parishad).
+   - Uses **Google Gemini 2.5 Flash** on Vertex AI with GCS bucket orchestration and auto-recorrection.
+
+---
+
+## 🔄 Architectural Flowchart
 
 ```mermaid
 flowchart TD
-    subgraph Inputs
-        PDF[Scanned Electoral Roll PDF]
+    subgraph Inputs ["Input Electoral Rolls (Raw_data/)"]
+        PDF_TEXT["Digital Vector Text PDFs (e.g. Vidhan Sabha AC Rolls)"]
+        PDF_SCAN["Scanned / Raster Photocopy PDFs (e.g. Municipal Rolls)"]
     end
 
-    subgraph "core/local/ (Local Development)"
-        EXT[extractor.py: Multithreaded Vision Extractor]
-        CHK[recheck.py: Sequence Gap & Matra Auditor]
-        RES[rescan_faulty_page.py: Surgical Page Healer]
+    subgraph LocalEngine ["core/local/ (Local Zero-Cost Engine)"]
+        EXT["extractor.py: Universal Local Extractor"]
+        NORM["hindi_normalizer.py: Devanagari Text Refiner"]
+        EXT --> NORM
     end
 
-    subgraph "core/cloud/ (GCP Cloud Pipeline)"
-        GCS_IN[(GCS: ocr-voter-lists-input)]
-        C_EXT[cloud_extractor.py: Bucket Stream Worker]
-        C_REC[cloud_recorrection.py: OCR Healer]
-        PIPE[auto_pipeline.py: Automated Orchestrator]
-        SYNC[cloud_sync.py: DB Sync to Local/VM]
-        GCS_OUT[(GCS: ocr-voter-lists-output)]
+    subgraph CloudEngine ["core/cloud/ (GCP Cloud Vision Pipeline)"]
+        GCS_IN[("GCS: ocr-voter-lists-input")]
+        C_PIPE["auto_pipeline.py: Cloud Orchestrator"]
+        C_EXT["cloud_extractor.py: Gemini 2.5 Flash Worker"]
+        C_REC["cloud_recorrection.py: OCR Healer"]
+        C_SYNC["cloud_sync.py: GCS to Local Ingestion"]
+        GCS_OUT[("GCS: ocr-voter-lists-output")]
+        
+        GCS_IN --> C_PIPE
+        C_PIPE --> C_EXT
+        C_EXT --> GCS_OUT
+        GCS_OUT --> C_REC
+        GCS_OUT --> C_SYNC
     end
 
-    subgraph "core/common/ (Foundations)"
-        AI[ai_config.py: Gemini Client Factory & Rate Limiter]
-        DB[database.py: WAL SQLite Schema & Bulk Upsert]
+    subgraph CommonEngine ["core/common/ (Shared Foundations)"]
+        AI_CFG["ai_config.py: Gemini Client Factory & Rate Limiter"]
+        DB_HLP["database.py: SQLite Schema & Upsert Helpers"]
+        AI_CFG -.-> C_EXT
+        AI_CFG -.-> C_REC
+        DB_HLP -.-> C_SYNC
     end
 
-    PDF --> EXT
-    PDF --> GCS_IN
-    GCS_IN --> C_EXT
-    C_EXT --> GCS_OUT
-    GCS_OUT --> SYNC
-    EXT --> DB
-    SYNC --> DB
-    DB --> CHK
-    CHK -->|Flags Faulty Pages| RES
-    RES --> DB
+    subgraph ProductionDB ["Production Databases (nextjs-search-app/data/)"]
+        VS_DB[("vidhan_sabha/vidhansabha.db (Assembly Rolls)")]
+        NP_DB[("nagar_parishad/voters.db (Municipal Rolls)")]
+    end
+
+    PDF_TEXT -->|Direct Extraction| EXT
+    EXT -->|Auto-Routed| VS_DB
+    EXT -->|Auto-Routed| NP_DB
+
+    PDF_SCAN -->|Uploaded to Cloud| GCS_IN
+    C_SYNC -->|Downloaded| NP_DB
 ```
 
 ---
 
-## 📂 Architecture & Directory Layout
-
-The core module is strictly segregated by operational environment:
+## 📂 Directory Layout
 
 ```
 core/
-├── cloud/                     # AI Pipeline on Google Cloud Platform
-│   ├── cloud_extractor.py     # High-concurrency PDF page extractor from GCS buckets
-│   ├── cloud_recorrection.py  # AI-driven surgical recorrection of OCR pages in cloud
-│   ├── cloud_sync.py          # Auto-sync extracted datasets from GCS to local SQLite
-│   └── auto_pipeline.py       # End-to-end cloud pipeline orchestrator (Extract -> Audit -> Sync)
+├── local/                     # Local Zero-Cost Extraction & Text Refinement
+│   ├── extractor.py           # Universal CLI extractor for Vidhan Sabha & Nagar Parishad
+│   ├── hindi_normalizer.py    # Devanagari Unicode refiner (short-i, split words, reph)
+│   └── __init__.py
 │
-├── local/                     # Local Dev & Quality Assurance Scripts
-│   ├── extractor.py           # Single/Batch local PDF extractor with Gemini OCR
-│   ├── recheck.py             # SQLite sequence gap audit & Hindi matra integrity validator
-│   └── rescan_faulty_page.py  # Local targeted rescan for flagged suspect pages
+├── cloud/                     # Cloud Vision AI Pipeline (Google Cloud Platform)
+│   ├── auto_pipeline.py       # Cloud orchestrator (watches GCS, triggers batch jobs)
+│   ├── cloud_extractor.py     # Concurrent PDF page chunker & Gemini 2.5 Flash worker
+│   ├── cloud_recorrection.py  # Quality auditor & surgical healer for low-confidence pages
+│   ├── cloud_sync.py          # Pulls extracted JSON cards from GCS into local SQLite
+│   └── __init__.py
 │
-├── common/                    # Shared Foundation Modules
-│   ├── ai_config.py           # Unified Gemini client factory, multi-key rotation & rate limiter
-│   └── database.py            # SQLite connection singleton, schema initialization & upsert helpers
+├── common/                    # Shared Infrastructure for Cloud Pipeline
+│   ├── ai_config.py           # Gemini client factory, multi-key rotator & 15 RPM limiter
+│   ├── database.py            # SQLite connection singleton & upsert helper
+│   └── __init__.py
 │
-├── Dockerfile                 # Standalone microservice container for GCP Cloud Run Jobs
-├── README.md                  # Core Engine Architecture & CLI Guide
-└── __init__.py                # Package initialization marker
+├── Dockerfile                 # Cloud Run Jobs container for automated extraction
+├── README.md                  # This architecture guide & CLI manual
+└── __init__.py
 ```
 
 ---
 
-## 🚀 Quick Start Guide
+## 🛠️ CLI Commands & Execution Guide
 
 ### 1. Local Extraction (`core/local/`)
 
-Extract a local PDF directly into the SQLite database with automatic worker scaling:
+Use `extractor.py` for digital text rolls. It automatically infers the election type from the filename and routes data to the correct database.
 
 ```bash
-# Standard local extraction
-python core/local/extractor.py "Raw_data/Nagar_parishad/Ward No-005-Part No-001.pdf" --ward 5
+# Extract all Vidhan Sabha assembly rolls in a folder (Default)
+python core/local/extractor.py --election-type vidhan_sabha --pdf-dir Raw_data/vidhan_sabha/raw_pdf_rolls
 
-# Custom page range with thread concurrency
-python core/local/extractor.py "input.pdf" --start-page 3 --end-page 15 --workers 6
+# Extract all Nagar Parishad municipal ward rolls
+python core/local/extractor.py --election-type nagar_parishad --pdf-dir Raw_data/nagar_parishad
+
+# Extract a single PDF roll file
+python core/local/extractor.py --pdf-file Raw_data/AC-137-Part-092.pdf
+
+# Extract specific parts or wards only (comma-separated)
+python core/local/extractor.py --parts 92,95
+
+# Custom target database output
+python core/local/extractor.py --pdf-dir Raw_data/my_rolls --db custom_voters.db
 ```
 
-### 2. Quality Audit & Auto-Healing (`core/local/`)
+#### Canonical File Naming & Default Paths:
 
-Run a quality audit to detect missing serial numbers, corrupted voter IDs, or matra drops:
+| Election Type | Input Directory (PDFs) | Canonical File Pattern | Default Output Database (SQLite) |
+| :--- | :--- | :--- | :--- |
+| **Vidhan Sabha** | `Raw_data/vidhan_sabha/raw_pdf_rolls/` | `AC-{ac_no}-Part-{part_no:03d}.pdf` | `nextjs-search-app/data/vidhan_sabha/vidhansabha.db` |
+| **Nagar Parishad** | `Raw_data/nagar_parishad/` | `NP-Ward-{ward_no:03d}.pdf` | `nextjs-search-app/data/nagar_parishad/voters.db` |
+
+> *Tip: You can override defaults anytime via `--pdf-dir <folder>` and `--db <path.db>`.*
+
+---
+
+### 2. Standalone Devanagari Hindi Refinement (`core/local/`)
+
+Use `hindi_normalizer.py` to fix OCR matra glitches on any existing SQLite database:
 
 ```bash
-# Run database sequence & integrity audit
-python core/local/recheck.py --ward 5
-
-# Surgically rescan only the flagged suspect pages
-python core/local/rescan_faulty_page.py
+# Normalizes both vidhansabha.db and vidhansabha_house.db
+python core/local/hindi_normalizer.py
 ```
 
-### 3. Cloud Batch Pipeline (`core/cloud/`)
+**What it fixes automatically:**
+- **Visual Short-`ि`:** Converts misplaced `ि` (e.g. `िजतेंद्र` $\to$ `जितेंद्र`, `गोिवन्द्राम` $\to$ `गोविन्द्राम`, `नंदिकशोर` $\to$ `नंदकिशोर`).
+- **Line-break Word Splits:** Recombines broken syllables (e.g. `राके श` $\to$ `राकेश`, `दिने श` $\to$ `दिनेश`).
+- **Detached Kumar:** Normalizes `दीपककु मार` $\to$ `दीपक कुमार` and `कु मार` $\to$ `कुमार`.
+- **Inverted Reph:** Corrects `वषार्` $\to$ `वर्षा`.
 
-For processing entire constituencies via Google Cloud Storage and Vertex AI:
+---
+
+### 3. Cloud Vision AI Pipeline (`core/cloud/`)
+
+For scanned, non-text raster PDFs requiring Gemini Vision AI:
 
 ```bash
-# Set environment credentials
-export GEMINI_API_KEY="AIzaSy..."
-# Or use GCP Service Account: export GOOGLE_APPLICATION_CREDENTIALS="service-account.json"
+# 1. Set environment variables
+export GEMINI_API_KEY="AIzaSy..."  # Or use GCP Service Account
+export INPUT_BUCKET="ocr-voter-lists-input"
+export OUTPUT_BUCKET="ocr-voter-lists-output"
 
-# Run end-to-end cloud orchestrator
+# 2. Run end-to-end cloud orchestrator
 python core/cloud/auto_pipeline.py --dataset nagar_parishad
 
-# Sync processed cloud datasets to local SQLite
+# 3. Surgically heal flagged/missing pages via Gemini Vision
+python core/cloud/cloud_recorrection.py --dataset nagar_parishad
+
+# 4. Sync extracted cloud JSON datasets down to local SQLite
 python core/cloud/cloud_sync.py --dataset nagar_parishad
-```
-
-### 4. Docker Containerization (`core/Dockerfile`)
-
-Build and run the engine as a containerized microservice:
-
-```bash
-# Build container from repository root
-docker build -t voter-ocr -f core/Dockerfile .
-
-# Run Phase 1: High-concurrency cloud extraction
-docker run --env-file .env voter-ocr
-
-# Run Phase 2: Surgical healing of suspect pages
-docker run --env-file .env -e MODE=recorrect voter-ocr
 ```
 
 ---
 
-## ⚡ Performance Benchmarks
+### 4. Cloud Worker Docker Microservice (`core/Dockerfile`)
 
-| Metric | Vertex AI Mode | AI Studio Free Key Rotation |
+Build and run the containerized cloud extraction worker on a **GCP Compute Engine VM**, **Cloud Run Job**, or remote server:
+
+```bash
+# Build the Cloud Worker image (from repository root)
+docker build -t voter-ocr-cloud -f core/Dockerfile .
+
+# Phase 1: High-concurrency cloud extraction (Default)
+docker run --env-file .env voter-ocr-cloud
+
+# Phase 2: Surgical healing of suspect/missing pages
+docker run --env-file .env -e MODE=recorrect voter-ocr-cloud
+
+# Phase 3: Full automated cloud pipeline orchestrator
+docker run --env-file .env -e MODE=pipeline voter-ocr-cloud
+```
+*(Note: `core/local/` is designed to run directly on your local machine with Python for instant zero-overhead execution).*
+
+---
+
+## ⚡ Technical Benchmarks
+
+| Dimension | `core/local/` (Regex Engine) | `core/cloud/` (Vision AI Engine) |
 | :--- | :--- | :--- |
-| **Throughput** | 45–60 pages / minute | 15–20 pages / minute (2 workers/key) |
-| **OCR Accuracy** | **99.4%** across 3,000+ cards | **99.1%** across 3,000+ cards |
-| **Matra Fidelity** | Preserves शिरोरेखा & bottom matras | Preserves शिरोरेखा & bottom matras |
-| **Failover** | Exponential Backoff (Tenacity) | Auto-rotates across comma-separated keys |
+| **Target Document Type** | Digital Vector / Text PDFs | Scanned Raster / Photocopy PDFs |
+| **Processing Speed** | **< 8.0 seconds / PDF** | 45–60 pages / minute |
+| **API Cost** | **₹0.00 (Zero API cost)** | ~$0.002 per page (Gemini 2.5 Flash) |
+| **Resource Usage** | < 50MB RAM (Single CPU core) | Network bandwidth + Cloud API quota |
+| **Continuous Sequence** | **100.0% (0 gaps across 51,000+ voters)** | 99.4% initial + auto-recorrection |
+| **Typographic Refinement**| Built-in regex NFC normalizer | Zero-matra-drop prompt engineering |
+| **Offline Capable** | **Yes (100% offline air-gapped)** | No (Requires Google Cloud connectivity) |
